@@ -1,0 +1,44 @@
+projects:
+  - name: ori-manager-frontend
+    environments:
+      # ==========================================
+      # 1. ENTORNO DE PRODUCCIÓN
+      # ==========================================
+      - name: Production
+        services:
+          - type: web
+            name: ori-manager-frontend-web-production
+            runtime: docker
+            dockerfilePath: ./Dockerfile
+            plan: free
+            branch: main
+            autoDeploy: true
+            previews:
+              generation: "off"
+
+            envVars:
+              - key: NODE_ENV
+                value: production
+              - key: PORT
+                value: "80"
+
+      # ==========================================
+      # 2. ENTORNO DE STAGING (PRUEBAS)
+      # ==========================================
+      - name: Staging
+        services:
+          - type: web
+            name: ori-manager-frontend-web-staging
+            runtime: docker
+            dockerfilePath: ./Dockerfile
+            plan: free
+            branch: develop
+            autoDeploy: true
+            previews:
+              generation: "off"
+
+            envVars:
+              - key: NODE_ENV
+                value: staging
+              - key: PORT
+                value: "80"
